@@ -2,6 +2,7 @@ package com.devsuperior.userdept.controllers;
 
 import com.devsuperior.userdept.entities.User;
 import com.devsuperior.userdept.repositories.UserRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,6 +45,17 @@ public class UserController {
     public ResponseEntity<Object>deleteById(@PathVariable(value = "id") Long id){
         Optional<User>userOptional = repository.findById(id);
         return ResponseEntity.status(HttpStatus.OK).body("Delete successfully.");
+    }
+
+
+    //Atualiza usuarios
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<Object> updateUser(@PathVariable(value = "id") Long id, @RequestBody User user){
+
+        Optional<User>userOptional = repository.findById(id);
+        user.setId(userOptional.get().getId());
+
+        return ResponseEntity.status(HttpStatus.OK).body(repository.save(user));
     }
 
 
