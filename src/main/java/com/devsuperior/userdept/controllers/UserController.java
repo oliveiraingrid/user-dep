@@ -3,8 +3,10 @@ package com.devsuperior.userdept.controllers;
 import com.devsuperior.userdept.entities.User;
 import com.devsuperior.userdept.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -31,4 +33,14 @@ public class UserController {
         User result = repository.save(user);
         return result;
     }
+
+    @DeleteMapping(value = "/delete/{id}")
+    public String deletarPorId (@PathVariable("id") Long id){
+
+       List<User> listUsers = new ArrayList<>();
+       listUsers.remove(id);
+
+       return "Usuario deletado com sucesso";
+    }
+
 }
